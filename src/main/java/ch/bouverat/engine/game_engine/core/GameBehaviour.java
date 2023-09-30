@@ -1,6 +1,7 @@
 package ch.bouverat.engine.game_engine.core;
 
 import ch.bouverat.engine.game_engine.component.Component;
+import ch.bouverat.engine.game_engine.component.Transform;
 import ch.bouverat.engine.game_engine.core.enums.ErrorType;
 import java.util.ArrayList;
 import java.util.List;

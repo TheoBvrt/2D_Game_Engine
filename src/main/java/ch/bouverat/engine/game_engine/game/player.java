@@ -9,8 +9,6 @@ public class player extends GameBehaviour {
     public void start() {
         System.out.println("Player init");
         addComponent(new Transform(this, new Vector2(0, 0)));
-        addComponent(new Transform(this, new Vector2(0, 0)));
-
     }
 
     @Override
