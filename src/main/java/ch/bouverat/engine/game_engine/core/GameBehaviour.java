@@ -1,7 +1,6 @@
 package ch.bouverat.engine.game_engine.core;
 
 import ch.bouverat.engine.game_engine.component.Component;
-import ch.bouverat.engine.game_engine.component.Transform;
 import ch.bouverat.engine.game_engine.core.enums.ErrorType;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,5 +36,16 @@ public class GameBehaviour {
                 }
             }
         }
+    }
+
+    public <T extends Component> T getComponent(Class<T> componentClass) {
+        for (Component comp : components) {
+            if (componentClass.isInstance(comp)) {
+                return componentClass.cast(comp);
+            }
+        }
+        Error.message(ErrorType.ERROR, componentClass.getSimpleName() + ".java",
+                "no component instance found.");
+        return null;
     }
 }
