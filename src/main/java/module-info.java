@@ -2,6 +2,9 @@ module ch.bouverat.engine.game_engine {
     requires javafx.controls;
     requires javafx.fxml;
 
+    exports ch.bouverat.engine.game_engine.utils;
+    exports ch.bouverat.engine.game_engine.settings;
+    exports  ch.bouverat.engine.game_engine.core.enums;
 
     opens ch.bouverat.engine.game_engine to javafx.fxml;
     exports ch.bouverat.engine.game_engine;

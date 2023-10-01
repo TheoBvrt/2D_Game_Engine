@@ -1,6 +1,15 @@
 package ch.bouverat.engine.game_engine.core;
 
+import ch.bouverat.engine.game_engine.settings.WindowSettings;
+
 public class GameEngine {
+
+    public WindowSettings projectConfiguration;
+
+    public GameEngine (WindowSettings projectConfiguration) {
+        this.projectConfiguration = projectConfiguration;
+    }
+
     public void start () {
         Thread thread = new Thread(this::gameLoop);
         thread.start();
@@ -18,6 +27,8 @@ public class GameEngine {
                     behaviour.update();
                 }
             }
+            Render render = new Render();
+            render.updateRender();
         }
     }
 }

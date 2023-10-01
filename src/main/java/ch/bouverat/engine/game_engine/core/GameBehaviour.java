@@ -5,7 +5,7 @@ import ch.bouverat.engine.game_engine.core.enums.ErrorType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameBehaviour {
+public abstract class GameBehaviour {
     private List<Component> components = new ArrayList<>();
     protected double deltaTime;
 
@@ -44,8 +44,6 @@ public class GameBehaviour {
                 return componentClass.cast(comp);
             }
         }
-        Error.message(ErrorType.ERROR, componentClass.getSimpleName() + ".java",
-                "no component instance found.");
         return null;
     }
 }
