@@ -17,7 +17,7 @@ public class Render{
                     image = gameBehaviour.getComponent(SpriteRenderer.class).sprite;
                 }
                 Transform transform = gameBehaviour.getComponent(Transform.class);
-                graphicsContext.drawImage(image, transform.position.x, transform.position.y);
+                graphicsContext.drawImage(image, transform.position.x, transform.position.x);
             }
         }
     }
