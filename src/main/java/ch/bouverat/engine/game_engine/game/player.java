@@ -1,7 +1,6 @@
 package ch.bouverat.engine.game_engine.game;
 
-import ch.bouverat.engine.game_engine.component.SpriteRenderer;
-import ch.bouverat.engine.game_engine.component.Transform;
+import ch.bouverat.engine.game_engine.component.*;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.core.InputManager;
 import ch.bouverat.engine.game_engine.utils.Vector2;
@@ -13,24 +12,28 @@ public class player extends GameBehaviour {
 
     @Override
     public void start() {
-        addComponent(new Transform(this, new Vector2(5, 10)));
-        addComponent(new SpriteRenderer(this, "/Users/theo/Documents/Perso/Java/2D_Game_Engine/src/main/resources/bishop.png"));
+        addComponent(new Transform(this, new Vector2(0, 0)));
+        SpriteRenderer spriteRenderer = new SpriteRenderer(this, "src/main/resources/bishop.png");
+
+        sizeY = (float) spriteRenderer.sprite.getHeight();
+        sizeX = (float) spriteRenderer.sprite.getWidth();
+
+        addComponent(spriteRenderer);
+        addComponent(new RigidBody(this, this.getComponent(Transform.class)));
+        addComponent(new Collider(this));
         transform = getComponent(Transform.class);
     }
 
     @Override
     public void update() {
-        if (InputManager.keyPressed(KeyCode.W)) {
-            transform.position.y -= 0.5;
-        }
-        if (InputManager.keyPressed(KeyCode.S)) {
-            transform.position.y += 0.5;
-        }
         if (InputManager.keyPressed(KeyCode.D)) {
             transform.position.x += 0.5;
         }
         if (InputManager.keyPressed(KeyCode.A)) {
             transform.position.x -= 0.5;
+        }
+        if (InputManager.keyIsDown(KeyCode.SPACE)) {
+            transform.position.y -= 200;
         }
     }
 }

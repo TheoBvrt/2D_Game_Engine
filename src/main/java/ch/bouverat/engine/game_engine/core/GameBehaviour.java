@@ -6,7 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GameBehaviour {
+
+    //Private
     private List<Component> components = new ArrayList<>();
+
+
+    //Protected
+    protected float sizeY;
+    protected float sizeX;
 
     public GameBehaviour() {
         BehaviourManager.addBehaviour(this);
@@ -40,5 +47,22 @@ public abstract class GameBehaviour {
             }
         }
         return null;
+    }
+
+    public boolean hasComponent(Class<?> componentClass) {
+        for (Component comp : components) {
+            if (componentClass.isInstance(comp)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public float getSizeX() {
+        return sizeX;
+    }
+
+    public float getSizeY() {
+        return sizeY;
     }
 }

@@ -11,7 +11,4 @@ public class Transform extends Component{
         super(parent);
         this.position = position;
     }
-
-    @Override
-    public void update() {}
 }

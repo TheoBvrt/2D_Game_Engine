@@ -5,20 +5,24 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class GameEngine {
     public WindowSettings projectConfiguration;
-    private GraphicsContext graphicsContext;
+    private final GraphicsContext graphicsContext;
 
     public static double deltaTime;
 
-    public GameEngine (WindowSettings projectConfiguration, GraphicsContext graphicsContext) {
+    public GameEngine(WindowSettings projectConfiguration, GraphicsContext graphicsContext) {
         this.projectConfiguration = projectConfiguration;
         this.graphicsContext = graphicsContext;
     }
 
-    public void start () {
+    public void start() {
         RenderLoop renderLoop = new RenderLoop(graphicsContext);
         renderLoop.start();
-        Thread thread = new Thread(this::gameLoop);
-        thread.start();
+
+        Thread gameLoop = new Thread(this::gameLoop);
+        gameLoop.start();
+
+        Thread physicThread = new Thread(this::physicLoop);
+        physicThread.start();
     }
 
     private void gameLoop() {
@@ -31,6 +35,19 @@ public class GameEngine {
                 if (behaviour != null) {
                     behaviour.update();
                 }
+            }
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.fillInStackTrace();
+            }
+        }
+    }
+
+    private void physicLoop() {
+        while (true) {
+            for (int i = 0; i < BehaviourManager.getRigidBodyList().size(); i++) {
+                BehaviourManager.getRigidBodyList().get(i).updateRigidBody();
             }
             try {
                 Thread.sleep(1);
