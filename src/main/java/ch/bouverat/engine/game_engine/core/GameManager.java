@@ -12,8 +12,9 @@ public class GameManager {
         windowSettings.screenWidth = 720;
         windowSettings.windowName = "Welcome to Java 2D Game engine !";
 
-        GameEngine gameEngine = new GameEngine(windowSettings);
-        new Window(windowSettings);
+        Window window =  new Window(windowSettings);
+        GameEngine gameEngine = new GameEngine(windowSettings, window.getGraphicsContext());
+        new InputManager(window.getScene());
         gameEngine.start();
 
         Game game = new Game();

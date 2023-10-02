@@ -1,16 +1,22 @@
 package ch.bouverat.engine.game_engine.core;
 
 import ch.bouverat.engine.game_engine.settings.WindowSettings;
+import javafx.scene.canvas.GraphicsContext;
 
 public class GameEngine {
-
     public WindowSettings projectConfiguration;
+    private GraphicsContext graphicsContext;
 
-    public GameEngine (WindowSettings projectConfiguration) {
+    public static double deltaTime;
+
+    public GameEngine (WindowSettings projectConfiguration, GraphicsContext graphicsContext) {
         this.projectConfiguration = projectConfiguration;
+        this.graphicsContext = graphicsContext;
     }
 
     public void start () {
+        RenderLoop renderLoop = new RenderLoop(graphicsContext);
+        renderLoop.start();
         Thread thread = new Thread(this::gameLoop);
         thread.start();
     }
@@ -19,16 +25,18 @@ public class GameEngine {
         double lastTime = System.nanoTime();
         while (true) {
             double currentTime = System.nanoTime();
-            double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
+            deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
             for (int i = 0; i < BehaviourManager.getBehaviourList().size(); i++) {
                 GameBehaviour behaviour = BehaviourManager.getBehaviourList().get(i);
                 if (behaviour != null) {
-                    behaviour.setDeltaTime(deltaTime);
                     behaviour.update();
                 }
             }
-            Render render = new Render();
-            render.updateRender();
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.fillInStackTrace();
+            }
         }
     }
 }

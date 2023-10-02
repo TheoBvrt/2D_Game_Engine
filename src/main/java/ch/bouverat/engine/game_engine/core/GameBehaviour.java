@@ -7,7 +7,6 @@ import java.util.List;
 
 public abstract class GameBehaviour {
     private List<Component> components = new ArrayList<>();
-    protected double deltaTime;
 
     public GameBehaviour() {
         BehaviourManager.addBehaviour(this);
@@ -18,10 +17,6 @@ public abstract class GameBehaviour {
     }
 
     public void update() {
-    }
-
-    public void setDeltaTime(double deltaTime) {
-        this.deltaTime = deltaTime;
     }
 
     public void addComponent(Component component) {
