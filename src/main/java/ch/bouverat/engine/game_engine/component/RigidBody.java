@@ -20,7 +20,7 @@ public class RigidBody extends Component{
     }
 
     public void updateRigidBody () {
-        transform.slide(Axis.Y, -PhysicsSetting.gravityForce);
+        transform.slide(Axis.Y, PhysicsSetting.gravityForce);
         /*if (parent.hasComponent(Collider.class)) {
             for (int i = 0; i < BehaviourManager.getColliderList().size(); i++) {
                 Collider collider = BehaviourManager.getColliderList().get(i);
