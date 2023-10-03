@@ -11,7 +11,7 @@ public class Platform extends GameBehaviour {
 
     @Override
     public void start() {
-        addComponent(new Transform(this, new Vector2(100, 350)));
+        addComponent(new Transform(this, new Vector2(150, 350)));
         SpriteRenderer spriteRenderer = new SpriteRenderer(this,"src/main/resources/platform.png");
         addComponent(spriteRenderer);
 

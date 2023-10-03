@@ -17,14 +17,32 @@ public class Transform extends Component{
     public void slide (Axis axis, double value) {
         if (parent.hasComponent(Collider.class)) {
             boolean stopMove = false;
-            for (Collider collider : BehaviourManager.getColliderList()) {
-                if (position.y + parent.getSizeY() == collider.colliderOrigin.y) {
-                    boolean onGround = ((position.x < collider.colliderOrigin.x && position.x + getParent().getSizeX() <
-                            collider.colliderOrigin.x) || position.x > collider.colliderEnd.x);
-                    if (!onGround) {
-                        stopMove = true;
+            if (axis == Axis.Y && value > 0) {
+                for (Collider collider : BehaviourManager.getColliderList()) {
+                    if (position.y + parent.getSizeY() == collider.colliderOrigin.y) {
+                        boolean onGround = ((position.x < collider.colliderOrigin.x && position.x + getParent().getSizeX() <
+                                collider.colliderOrigin.x) || position.x > collider.colliderEnd.x);
+                        if (!onGround) {
+                            stopMove = true;
+                        }
+                        break;
                     }
-                    break;
+                }
+            }
+            if (axis == Axis.X && value > 0) {
+                for (Collider collider : BehaviourManager.getColliderList()) {
+                    if (position.x + parent.getSizeX() == collider.colliderOrigin.x) {
+                        stopMove = true;
+                        break;
+                    }
+                }
+            }
+            if (axis == Axis.X && value < 0) {
+                for (Collider collider : BehaviourManager.getColliderList()) {
+                    if (position.x == collider.colliderEnd.x) {
+                        stopMove = true;
+                        break;
+                    }
                 }
             }
             if (!stopMove) {

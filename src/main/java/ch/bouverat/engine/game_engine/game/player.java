@@ -3,6 +3,7 @@ package ch.bouverat.engine.game_engine.game;
 import ch.bouverat.engine.game_engine.component.*;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.core.InputManager;
+import ch.bouverat.engine.game_engine.core.enums.Axis;
 import ch.bouverat.engine.game_engine.utils.Vector2;
 import javafx.scene.input.KeyCode;
 
@@ -27,10 +28,10 @@ public class player extends GameBehaviour {
     @Override
     public void update() {
         if (InputManager.keyPressed(KeyCode.D)) {
-            transform.position.x += 0.5;
+            transform.slide(Axis.X, 0.5f);
         }
         if (InputManager.keyPressed(KeyCode.A)) {
-            transform.position.x -= 0.5;
+            transform.slide(Axis.X, -0.5f);
         }
         if (InputManager.keyIsDown(KeyCode.SPACE)) {
             transform.position.y -= 200;
