@@ -10,9 +10,8 @@ public class Collider extends Component{
 
     private final double colliderSizeY = parent.getSizeY();
     private final double colliderSizeX = parent.getSizeX();
-    public Vector2 colliderOrigin = parent.getComponent(Transform.class).position;
-    public Vector2 colliderEnd = new Vector2(colliderOrigin.x + colliderSizeX, colliderOrigin.y + colliderSizeY);
-
+    public Vector2 origin = parent.getComponent(Transform.class).position;
+    public Vector2 end = new Vector2(origin.x + colliderSizeX, origin.y + colliderSizeY);
 
 
     public Collider(GameBehaviour parent) {
@@ -21,5 +20,9 @@ public class Collider extends Component{
         if (parent.getSizeX() == 0 || parent.getSizeY() == 0) {
             Error.message(ErrorType.WARNING, parent.getClass().getSimpleName() + ".java", "size values are not initialized");
         }
+    }
+
+    public void collision() {
+        Transform transform = parent.getComponent(Transform.class);
     }
 }

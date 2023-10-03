@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 public class player extends GameBehaviour {
 
     Transform transform;
+    Collider collider;
 
     @Override
     public void start() {
@@ -21,7 +22,8 @@ public class player extends GameBehaviour {
 
         addComponent(spriteRenderer);
         addComponent(new RigidBody(this, this.getComponent(Transform.class)));
-        addComponent(new Collider(this));
+        collider = new Collider(this);
+        addComponent(collider);
         transform = getComponent(Transform.class);
     }
 
