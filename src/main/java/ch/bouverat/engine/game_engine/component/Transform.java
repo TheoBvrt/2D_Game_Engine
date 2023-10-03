@@ -19,9 +19,9 @@ public class Transform extends Component{
             boolean stopMove = false;
             if (axis == Axis.Y && value > 0) {
                 for (Collider collider : BehaviourManager.getColliderList()) {
+                    boolean onGround = ((position.x < collider.colliderOrigin.x && position.x + getParent().getSizeX() <
+                            collider.colliderOrigin.x) || position.x > collider.colliderEnd.x);
                     if (position.y + parent.getSizeY() == collider.colliderOrigin.y) {
-                        boolean onGround = ((position.x < collider.colliderOrigin.x && position.x + getParent().getSizeX() <
-                                collider.colliderOrigin.x) || position.x > collider.colliderEnd.x);
                         if (!onGround) {
                             stopMove = true;
                         }
@@ -29,17 +29,19 @@ public class Transform extends Component{
                     }
                 }
             }
-            if (axis == Axis.X && value > 0) {
+            else if (axis == Axis.X && value > 0) {
                 for (Collider collider : BehaviourManager.getColliderList()) {
-                    if (position.x + parent.getSizeX() == collider.colliderOrigin.x) {
+                    if (position.x + parent.getSizeX() == collider.colliderOrigin.x && position.y + parent.getSizeY() >=
+                            collider.colliderOrigin.y) {
                         stopMove = true;
                         break;
                     }
                 }
             }
-            if (axis == Axis.X && value < 0) {
+            else if (axis == Axis.X && value < 0) {
                 for (Collider collider : BehaviourManager.getColliderList()) {
-                    if (position.x == collider.colliderEnd.x) {
+                    if (position.x == collider.colliderEnd.x && position.y + parent.getSizeY() >=
+                            collider.colliderOrigin.y) {
                         stopMove = true;
                         break;
                     }

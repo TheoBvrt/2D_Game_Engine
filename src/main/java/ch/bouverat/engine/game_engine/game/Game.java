@@ -5,5 +5,6 @@ public class Game {
         new player();
         new Platform();
         new P2();
+        new P3();
     }
 }

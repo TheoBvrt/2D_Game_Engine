@@ -12,6 +12,7 @@ public class BehaviourManager {
 
     private static List<Collider> colliderList  = new ArrayList<>();
 
+
     public static void addBehaviour (GameBehaviour behaviour) {
         behaviourList.add(behaviour);
     }
