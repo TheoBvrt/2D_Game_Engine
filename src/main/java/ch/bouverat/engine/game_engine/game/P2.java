@@ -7,17 +7,14 @@ import ch.bouverat.engine.game_engine.core.BehaviourManager;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.utils.Vector2;
 
-public class Platform extends GameBehaviour {
-
-    @Override
+public class P2 extends GameBehaviour {
     public void start() {
-        addComponent(new Transform(this, new Vector2(100, 350)));
+        addComponent(new Transform(this, new Vector2(300, 250)));
         SpriteRenderer spriteRenderer = new SpriteRenderer(this,"src/main/resources/platform.png");
         addComponent(spriteRenderer);
 
         sizeX = 335;
         sizeY = 55;
-        System.out.println(sizeX);
         Collider collider = new Collider(this);
         BehaviourManager.addCollider(collider);
         addComponent(collider);

@@ -4,5 +4,6 @@ public class Game {
     public void start () {
         new player();
         new Platform();
+        new P2();
     }
 }

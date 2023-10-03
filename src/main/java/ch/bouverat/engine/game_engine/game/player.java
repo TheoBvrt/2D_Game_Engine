@@ -12,11 +12,11 @@ public class player extends GameBehaviour {
 
     @Override
     public void start() {
-        addComponent(new Transform(this, new Vector2(0, 0)));
+        addComponent(new Transform(this, new Vector2(250, 0)));
         SpriteRenderer spriteRenderer = new SpriteRenderer(this, "src/main/resources/bishop.png");
 
-        sizeY = (float) spriteRenderer.sprite.getHeight();
-        sizeX = (float) spriteRenderer.sprite.getWidth();
+        sizeY = 64;
+        sizeX = 34;
 
         addComponent(spriteRenderer);
         addComponent(new RigidBody(this, this.getComponent(Transform.class)));

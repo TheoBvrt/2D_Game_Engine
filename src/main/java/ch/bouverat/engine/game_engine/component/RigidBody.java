@@ -3,10 +3,9 @@ package ch.bouverat.engine.game_engine.component;
 import ch.bouverat.engine.game_engine.core.BehaviourManager;
 import ch.bouverat.engine.game_engine.core.Error;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
+import ch.bouverat.engine.game_engine.core.enums.Axis;
 import ch.bouverat.engine.game_engine.core.enums.ErrorType;
-import ch.bouverat.engine.game_engine.game.Platform;
 import ch.bouverat.engine.game_engine.settings.PhysicsSetting;
-import ch.bouverat.engine.game_engine.settings.WindowSettings;
 
 public class RigidBody extends Component{
 
@@ -21,12 +20,18 @@ public class RigidBody extends Component{
     }
 
     public void updateRigidBody () {
-        if (parent.hasComponent(Collider.class)) {
-
+        transform.slide(Axis.Y, -PhysicsSetting.gravityForce);
+        /*if (parent.hasComponent(Collider.class)) {
             for (int i = 0; i < BehaviourManager.getColliderList().size(); i++) {
                 Collider collider = BehaviourManager.getColliderList().get(i);
-                System.out.println("ad"  + (transform.position.y < collider.colliderOrigin.y));
+                if (collider.getParent() != parent) {
+                    boolean onCollider = ((transform.position.x < collider.colliderOrigin.x && transform.position.x + getParent().getSizeX() < collider.colliderOrigin.x) ||
+                            transform.position.x > collider.colliderEnd.x );
+                    if (transform.position.y + parent.getSizeY() < collider.colliderOrigin.y || onCollider) {
+                        transform.slide(Axis.Y, -PhysicsSetting.gravityForce);
+                    }
+                }
             }
-        }
+        }*/
     }
 }

@@ -19,6 +19,5 @@ public class Collider extends Component{
         if (parent.getSizeX() == 0 || parent.getSizeY() == 0) {
             Error.message(ErrorType.WARNING, parent.getClass().getSimpleName() + ".java", "size values are not initialized");
         }
-        BehaviourManager.addCollider(this);
     }
 }
