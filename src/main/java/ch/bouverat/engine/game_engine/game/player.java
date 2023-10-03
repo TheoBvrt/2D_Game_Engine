@@ -28,10 +28,10 @@ public class player extends GameBehaviour {
     @Override
     public void update() {
         if (InputManager.keyPressed(KeyCode.D)) {
-            transform.slide(Axis.X, 0.5f);
+            transform.slide(Axis.X, 0.8f);
         }
         if (InputManager.keyPressed(KeyCode.A)) {
-            transform.slide(Axis.X, -0.5f);
+            transform.slide(Axis.X, -0.8f);
         }
         if (InputManager.keyIsDown(KeyCode.SPACE)) {
             transform.position.y -= 200;

@@ -5,7 +5,7 @@ import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.core.enums.Axis;
 import ch.bouverat.engine.game_engine.utils.Vector2;
 
-public class Transform extends Component{
+public class Transform extends Component {
 
     public Vector2 position;
 
@@ -14,51 +14,44 @@ public class Transform extends Component{
         this.position = position;
     }
 
-    public void slide (Axis axis, double value) {
-        if (parent.hasComponent(Collider.class)) {
-            boolean stopMove = false;
-            if (axis == Axis.Y && value > 0) {
-                for (Collider collider : BehaviourManager.getColliderList()) {
-                    boolean onGround = ((position.x < collider.colliderOrigin.x && position.x + getParent().getSizeX() <
-                            collider.colliderOrigin.x) || position.x > collider.colliderEnd.x);
-                    if (position.y + parent.getSizeY() == collider.colliderOrigin.y) {
-                        if (!onGround) {
-                            stopMove = true;
-                        }
-                        break;
-                    }
+    private boolean isCollidingWith(Collider other, Vector2 proposedPosition) {
+        return proposedPosition.x < other.colliderEnd.x &&
+                proposedPosition.x + parent.getSizeX() > other.colliderOrigin.x &&
+                proposedPosition.y < other.colliderEnd.y &&
+                proposedPosition.y + parent.getSizeY() > other.colliderOrigin.y;
+    }
+
+    public void slide(Axis axis, double value) {
+        Vector2 proposedPosition = new Vector2(position.x, position.y);
+
+        if(axis == Axis.X) {
+            proposedPosition.x += value;
+
+            boolean collisionDetectedX = false;
+            for (Collider collider : BehaviourManager.getColliderList()) {
+                if(isCollidingWith(collider, proposedPosition)) {
+                    collisionDetectedX = true;
+                    break;
                 }
             }
-            else if (axis == Axis.X && value > 0) {
-                for (Collider collider : BehaviourManager.getColliderList()) {
-                    if (position.x + parent.getSizeX() == collider.colliderOrigin.x && position.y + parent.getSizeY() >=
-                            collider.colliderOrigin.y) {
-                        stopMove = true;
-                        break;
-                    }
-                }
+
+            if(!collisionDetectedX) {
+                position.x = proposedPosition.x;
             }
-            else if (axis == Axis.X && value < 0) {
-                for (Collider collider : BehaviourManager.getColliderList()) {
-                    if (position.x == collider.colliderEnd.x && position.y + parent.getSizeY() >=
-                            collider.colliderOrigin.y) {
-                        stopMove = true;
-                        break;
-                    }
-                }
-            }
-            if (!stopMove) {
-                if (axis == Axis.X) {
-                    position.x += value;
-                } else {
-                    position.y += value;
-                }
-            }
+
         } else {
-            if (axis == Axis.X) {
-                position.x += value;
-            } else {
-                position.y += value;
+            proposedPosition.y += value;
+
+            boolean collisionDetectedY = false;
+            for (Collider collider : BehaviourManager.getColliderList()) {
+                if(isCollidingWith(collider, proposedPosition)) {
+                    collisionDetectedY = true;
+                    break;
+                }
+            }
+
+            if(!collisionDetectedY) {
+                position.y = proposedPosition.y;
             }
         }
     }
