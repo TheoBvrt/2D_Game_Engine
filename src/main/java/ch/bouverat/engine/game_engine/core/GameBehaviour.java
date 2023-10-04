@@ -2,10 +2,16 @@ package ch.bouverat.engine.game_engine.core;
 
 import ch.bouverat.engine.game_engine.component.Component;
 import ch.bouverat.engine.game_engine.core.enums.ErrorType;
+import ch.bouverat.engine.game_engine.core.enums.Tag;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class GameBehaviour {
+
+    //Public
+    public Tag tag = Tag.DEFAULT;
 
     //Private
     private List<Component> components = new ArrayList<>();
@@ -20,11 +26,11 @@ public abstract class GameBehaviour {
         start();
     }
 
-    public void start() {
-    }
+    public void start() {}
 
-    public void update() {
-    }
+    public void update() {}
+
+    public void onCollision(GameBehaviour gameBehaviour) {}
 
     public void addComponent(Component component) {
         components.add(component);

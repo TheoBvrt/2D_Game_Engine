@@ -30,21 +30,22 @@ public class Collider extends Component{
                 position.y + parent.getSizeY() > other.origin.y - 1;
     }
 
-    public boolean onCollision(Transform transform) {
+    public void onCollision(Transform transform) {
         boolean collisionDetected = false;
+
+        GameBehaviour gameBehaviour = null;
         for (Collider collider : BehaviourManager.getColliderList()) {
             if (collider.getParent() != parent) {
                 if (isCollidingWith(transform.position, collider)) {
                     collisionDetected = true;
+                    gameBehaviour = collider.parent;
                     break;
                 }
             }
         }
 
         if (collisionDetected) {
-            return (true);
-        } else {
-            return (false);
+            parent.onCollision(gameBehaviour);
         }
     }
 }
