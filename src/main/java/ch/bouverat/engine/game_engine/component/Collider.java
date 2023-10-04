@@ -1,3 +1,4 @@
+
 package ch.bouverat.engine.game_engine.component;
 
 import ch.bouverat.engine.game_engine.core.BehaviourManager;
@@ -22,7 +23,28 @@ public class Collider extends Component{
         }
     }
 
-    public void collision() {
-        Transform transform = parent.getComponent(Transform.class);
+    private boolean isCollidingWith(Vector2 position, Collider other) {
+        return position.x < other.end.x + 1 &&
+                position.x + parent.getSizeX() > other.origin.x - 1&&
+                position.y < other.end.y + 1 &&
+                position.y + parent.getSizeY() > other.origin.y - 1;
+    }
+
+    public boolean onCollision(Transform transform) {
+        boolean collisionDetected = false;
+        for (Collider collider : BehaviourManager.getColliderList()) {
+            if (collider.getParent() != parent) {
+                if (isCollidingWith(transform.position, collider)) {
+                    collisionDetected = true;
+                    break;
+                }
+            }
+        }
+
+        if (collisionDetected) {
+            return (true);
+        } else {
+            return (false);
+        }
     }
 }

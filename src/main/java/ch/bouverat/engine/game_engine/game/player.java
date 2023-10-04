@@ -38,5 +38,10 @@ public class player extends GameBehaviour {
         if (InputManager.keyIsDown(KeyCode.SPACE)) {
             transform.position.y -= 200;
         }
+        if (collider != null) {
+            if (collider.onCollision(transform)) {
+                System.out.println("Colision detected");
+            }
+        }
     }
 }

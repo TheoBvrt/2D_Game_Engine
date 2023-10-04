@@ -22,9 +22,8 @@ public class Transform extends Component {
     }
 
     public void slide(Axis axis, double value) {
-        getParent().getComponent(Collider.class).collision();
-
         Vector2 proposedPosition = new Vector2(position.x, position.y);
+
         if(axis == Axis.X) {
             proposedPosition.x += value;
             boolean collisionDetectedX = false;

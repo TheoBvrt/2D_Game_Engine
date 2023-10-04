@@ -8,6 +8,7 @@ import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.utils.Vector2;
 
 public class P2 extends GameBehaviour {
+
     public void start() {
         addComponent(new Transform(this, new Vector2(-100, 250)));
         SpriteRenderer spriteRenderer = new SpriteRenderer(this,"src/main/resources/platform.png");
