@@ -1,5 +1,7 @@
 package ch.bouverat.engine.game_engine.core;
 
+import ch.bouverat.engine.game_engine.component.Collider;
+import ch.bouverat.engine.game_engine.component.Transform;
 import ch.bouverat.engine.game_engine.settings.WindowSettings;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -26,18 +28,29 @@ public class GameEngine {
     }
 
     private void gameLoop() {
-        double lastTime = System.nanoTime();
+        long lastTime = System.nanoTime();
         while (true) {
-            double currentTime = System.nanoTime();
-            deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
+            long currentTime = System.nanoTime();
+            long updateLength = currentTime - lastTime;
+            lastTime = currentTime;
+            deltaTime = updateLength / 1_000_000_000.0;
+
             for (int i = 0; i < BehaviourManager.getBehaviourList().size(); i++) {
                 GameBehaviour behaviour = BehaviourManager.getBehaviourList().get(i);
                 if (behaviour != null) {
                     behaviour.update();
+                    if (behaviour.getComponent(Collider.class) != null) {
+                        behaviour.getComponent(Collider.class).onCollision(behaviour.getComponent(Transform.class).position);
+                    }
                 }
             }
             try {
-                Thread.sleep(1);
+                int TARGET_FPS = 120;
+                long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+                long sleepTime = (lastTime - System.nanoTime() + OPTIMAL_TIME) / 1000000;
+                if (sleepTime > 0) {
+                    Thread.sleep(sleepTime);
+                }
             } catch (InterruptedException e) {
                 e.fillInStackTrace();
             }

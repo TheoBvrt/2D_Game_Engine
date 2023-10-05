@@ -2,6 +2,7 @@ package ch.bouverat.engine.game_engine.game;
 
 import ch.bouverat.engine.game_engine.component.*;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
+import ch.bouverat.engine.game_engine.core.GameEngine;
 import ch.bouverat.engine.game_engine.core.InputManager;
 import ch.bouverat.engine.game_engine.core.enums.Axis;
 import ch.bouverat.engine.game_engine.utils.Vector2;
@@ -30,18 +31,18 @@ public class player extends GameBehaviour {
     @Override
     public void update() {
         if (InputManager.keyPressed(KeyCode.D)) {
-            transform.slide(Axis.X, 0.8f);
+            transform.slide(Axis.X, 500f * GameEngine.deltaTime);
         }
         if (InputManager.keyPressed(KeyCode.A)) {
-            transform.slide(Axis.X, -0.8f);
+            transform.slide(Axis.X, -500f * GameEngine.deltaTime);
         }
         if (InputManager.keyIsDown(KeyCode.SPACE)) {
-            transform.position.y -= 200;
+            transform.slide(Axis.Y, -200);
         }
     }
 
     @Override
     public void onCollisionEnter(GameBehaviour gameBehaviour) {
-        System.out.println(gameBehaviour.getClass().getSimpleName());
+        System.out.println("test");
     }
 }

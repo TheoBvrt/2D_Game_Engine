@@ -9,6 +9,7 @@ import ch.bouverat.engine.game_engine.utils.Vector2;
 
 import java.security.PrivateKey;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Collider extends Component{
@@ -16,6 +17,8 @@ public class Collider extends Component{
     private final double colliderSizeY = parent.getSizeY();
 
     private final double colliderSizeX = parent.getSizeX();
+
+    private List<Collider> currentlyColliding = new ArrayList<>();
 
 
     boolean collisionEnter = false;
@@ -40,21 +43,16 @@ public class Collider extends Component{
                 position.y + parent.getSizeY() > other.origin.y - 1;
     }
 
-    public void onCollisionEnter(List<Collider> colliders) {
-        if (!collisionEnter) {
-            for (Collider collider : colliders) {
-                parent.onCollisionEnter(collider.parent);
-            }
-            collisionEnter = true;
-        }
+    public void onCollisionEnter(Collider collider) {
+        System.out.println(collider.getParent().getClass().getSimpleName());
     }
 
-    public void onCollision(Transform transform) {
+    public void onCollision(Vector2 vector2) {
         List<Collider> colliders = new ArrayList<>();
 
         for (Collider collider : BehaviourManager.getColliderList()) {
             if (collider.getParent() != parent) {
-                if (isCollidingWith(transform.position, collider)) {
+                if (isCollidingWith(vector2, collider)) {
                     if (!colliders.contains(collider)) {
                         colliders.add(collider);
                     }
@@ -62,14 +60,19 @@ public class Collider extends Component{
             }
         }
 
-        if (!colliders.isEmpty()) {
-            onCollisionEnter(colliders);
-        } else {
-            collisionEnter = false;
+        for (Collider collider : colliders) {
+            if (collider.getParent() != parent) {
+                if (!currentlyColliding.contains(collider)) {
+                    onCollisionEnter(collider);
+                    currentlyColliding.add(collider);
+                }
+            }
         }
 
         for (Collider collider : colliders) {
             parent.onCollision(collider.parent);
         }
+
+        currentlyColliding = new ArrayList<>(colliders);
     }
 }
