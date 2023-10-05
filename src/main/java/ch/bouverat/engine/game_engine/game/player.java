@@ -41,7 +41,7 @@ public class player extends GameBehaviour {
     }
 
     @Override
-    public void onCollision(GameBehaviour gameBehaviour) {
-        System.out.println(gameBehaviour.tag);
+    public void onCollisionEnter(GameBehaviour gameBehaviour) {
+        System.out.println(gameBehaviour.getClass().getSimpleName());
     }
 }

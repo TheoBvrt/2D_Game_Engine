@@ -32,6 +32,8 @@ public abstract class GameBehaviour {
 
     public void onCollision(GameBehaviour gameBehaviour) {}
 
+    public void onCollisionEnter(GameBehaviour gameBehaviour) {}
+
     public void addComponent(Component component) {
         components.add(component);
         for (int i = 0; i < components.size(); i++) {
