@@ -7,21 +7,18 @@ import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.core.enums.ErrorType;
 import ch.bouverat.engine.game_engine.utils.Vector2;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Collider extends Component{
+
+    public boolean onGround = false;
 
     private final double colliderSizeY = parent.getSizeY();
 
     private final double colliderSizeX = parent.getSizeX();
 
     private List<Collider> currentlyColliding = new ArrayList<>();
-
-
-    boolean collisionEnter = false;
 
 
     public Vector2 origin = parent.getComponent(Transform.class).position;
@@ -43,16 +40,24 @@ public class Collider extends Component{
                 position.y + parent.getSizeY() > other.origin.y - 1;
     }
 
-    public void onCollisionEnter(Collider collider) {
+    private boolean isOnGround(Vector2 position, Collider other) {
+        return (position.y + parent.getSizeY() > other.origin.y - 1);
+    }
+
+    private void onCollisionEnter(Collider collider) {
         parent.onCollisionEnter(collider.getParent());
     }
 
     public void onCollision(Vector2 vector2) {
         List<Collider> colliders = new ArrayList<>();
 
+        onGround = false;
         for (Collider collider : BehaviourManager.getColliderList()) {
             if (collider.getParent() != parent) {
                 if (isCollidingWith(vector2, collider)) {
+                    if (!onGround && isOnGround(vector2, collider)) {
+                        onGround = true;
+                    }
                     if (!colliders.contains(collider)) {
                         colliders.add(collider);
                     }
