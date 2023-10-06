@@ -30,6 +30,7 @@ public class player extends GameBehaviour {
 
     @Override
     public void update() {
+        //System.out.println("Y : " + getComponent(Transform.class).position.y);
         if (InputManager.keyPressed(KeyCode.D)) {
             transform.slide(Axis.X, 500f * GameEngine.deltaTime);
         }
@@ -37,12 +38,8 @@ public class player extends GameBehaviour {
             transform.slide(Axis.X, -500f * GameEngine.deltaTime);
         }
         if (InputManager.keyIsDown(KeyCode.SPACE)) {
-            transform.slide(Axis.Y, -200);
+            transform.addForce(Axis.Y, 100);
+            //transform.slide(Axis.Y, -200);
         }
-    }
-
-    @Override
-    public void onCollisionEnter(GameBehaviour gameBehaviour) {
-        System.out.println("test");
     }
 }

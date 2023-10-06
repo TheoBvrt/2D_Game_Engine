@@ -44,7 +44,7 @@ public class Collider extends Component{
     }
 
     public void onCollisionEnter(Collider collider) {
-        System.out.println(collider.getParent().getClass().getSimpleName());
+        parent.onCollisionEnter(collider.getParent());
     }
 
     public void onCollision(Vector2 vector2) {

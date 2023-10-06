@@ -21,17 +21,5 @@ public class RigidBody extends Component{
 
     public void updateRigidBody () {
         transform.slide(Axis.Y, PhysicsSetting.gravityForce);
-        /*if (parent.hasComponent(Collider.class)) {
-            for (int i = 0; i < BehaviourManager.getColliderList().size(); i++) {
-                Collider collider = BehaviourManager.getColliderList().get(i);
-                if (collider.getParent() != parent) {
-                    boolean onCollider = ((transform.position.x < collider.colliderOrigin.x && transform.position.x + getParent().getSizeX() < collider.colliderOrigin.x) ||
-                            transform.position.x > collider.colliderEnd.x );
-                    if (transform.position.y + parent.getSizeY() < collider.colliderOrigin.y || onCollider) {
-                        transform.slide(Axis.Y, -PhysicsSetting.gravityForce);
-                    }
-                }
-            }
-        }*/
     }
 }

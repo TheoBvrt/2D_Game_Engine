@@ -29,6 +29,7 @@ public class GameEngine {
 
     private void gameLoop() {
         long lastTime = System.nanoTime();
+
         while (true) {
             long currentTime = System.nanoTime();
             long updateLength = currentTime - lastTime;
