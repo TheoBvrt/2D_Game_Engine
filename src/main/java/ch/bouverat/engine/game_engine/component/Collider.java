@@ -1,7 +1,7 @@
 
 package ch.bouverat.engine.game_engine.component;
 
-import ch.bouverat.engine.game_engine.core.BehaviourManager;
+import ch.bouverat.engine.game_engine.core.ObjectManager;
 import ch.bouverat.engine.game_engine.core.Error;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.core.enums.ErrorType;
@@ -34,6 +34,7 @@ public class Collider extends Component {
         if (parent.getSizeX() == 0 || parent.getSizeY() == 0) {
             Error.message(ErrorType.WARNING, parent.getClass().getSimpleName() + ".java", "size values are not initialized");
         }
+        ObjectManager.addCollider(this);
     }
 
     private boolean isOnGround(Vector2 position, Collider other) {
@@ -60,11 +61,8 @@ public class Collider extends Component {
         List<Collider> triggers = new ArrayList<>();
 
         onGround = false;
-        for (Collider otherCollider : BehaviourManager.getColliderList()) {
+        for (Collider otherCollider : ObjectManager.getColliderList()) {
             if (otherCollider.getParent() != parent) {
-                //System.out.println("Collider game : " + getParent().getClass().getSimpleName());
-                //System.out.println(otherCollider.getParent().getClass().getSimpleName() + " : " + isCollidingWith(vector2, otherCollider));
-
                 if (isCollidingWith(vector2, otherCollider)) {
                     if (!onGround && isOnGround(vector2, otherCollider)) {
                         onGround = true;

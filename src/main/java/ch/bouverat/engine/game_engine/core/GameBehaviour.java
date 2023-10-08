@@ -6,15 +6,15 @@ import ch.bouverat.engine.game_engine.core.enums.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class GameBehaviour {
 
     //Public
     public Tag tag = Tag.DEFAULT;
+    final public String name = this.getClass().getSimpleName();
 
     //Private
-    private List<Component> components = new ArrayList<>();
+    private final List<Component> components = new ArrayList<>();
 
 
     //Protected
@@ -22,7 +22,7 @@ public abstract class GameBehaviour {
     protected float sizeX;
 
     public GameBehaviour() {
-        BehaviourManager.addBehaviour(this);
+        ObjectManager.addBehaviour(this);
         start();
     }
 
@@ -82,5 +82,9 @@ public abstract class GameBehaviour {
 
     public float getSizeY() {
         return sizeY;
+    }
+
+    public boolean compareTag(Tag tag) {
+        return (this.tag == tag);
     }
 }

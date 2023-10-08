@@ -1,6 +1,6 @@
 package ch.bouverat.engine.game_engine.component;
 
-import ch.bouverat.engine.game_engine.core.BehaviourManager;
+import ch.bouverat.engine.game_engine.core.ObjectManager;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.core.enums.Axis;
 import ch.bouverat.engine.game_engine.utils.Vector2;
@@ -26,7 +26,7 @@ public class Transform extends Component {
         if(axis == Axis.X) {
             proposedPosition.x += value;
             boolean collisionDetectedX = false;
-            for (Collider collider : BehaviourManager.getColliderList()) {
+            for (Collider collider : ObjectManager.getColliderList()) {
                 if (collider.getParent() != parent) {
                     if(isCollidingWith(collider, proposedPosition) && !collider.isTrigger) {
                         collisionDetectedX = true;
@@ -37,12 +37,11 @@ public class Transform extends Component {
             if(!collisionDetectedX) {
                 position.x = proposedPosition.x;
             }
-
         } else {
             proposedPosition.y += value;
 
             boolean collisionDetectedY = false;
-            for (Collider collider : BehaviourManager.getColliderList()) {
+            for (Collider collider : ObjectManager.getColliderList()) {
                 if (collider.getParent() != parent) {
                     if(isCollidingWith(collider, proposedPosition) && !collider.isTrigger) {
                         collisionDetectedY = true;
@@ -50,7 +49,6 @@ public class Transform extends Component {
                     }
                 }
             }
-
             if(!collisionDetectedY) {
                 position.y = proposedPosition.y;
             }

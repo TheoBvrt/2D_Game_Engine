@@ -1,6 +1,6 @@
 package ch.bouverat.engine.game_engine.game;
 
-import ch.bouverat.engine.game_engine.component.RigidBody;
+import ch.bouverat.engine.game_engine.component.Rigidbody;
 import ch.bouverat.engine.game_engine.component.SpriteRenderer;
 import ch.bouverat.engine.game_engine.component.Transform;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
@@ -13,6 +13,6 @@ public class Chat extends GameBehaviour {
         sizeY = 231;
         addComponent(new Transform(this, new Vector2(0, 0)));
         addComponent(new SpriteRenderer(this, "src/main/resources/chat.png"));
-        addComponent(new RigidBody(this, this.getComponent(Transform.class)));
+        addComponent(new Rigidbody(this, this.getComponent(Transform.class)));
     }
 }

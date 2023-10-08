@@ -3,7 +3,7 @@ package ch.bouverat.engine.game_engine.game;
 import ch.bouverat.engine.game_engine.component.Collider;
 import ch.bouverat.engine.game_engine.component.SpriteRenderer;
 import ch.bouverat.engine.game_engine.component.Transform;
-import ch.bouverat.engine.game_engine.core.BehaviourManager;
+import ch.bouverat.engine.game_engine.core.ObjectManager;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.core.enums.Tag;
 import ch.bouverat.engine.game_engine.utils.Vector2;
@@ -21,8 +21,6 @@ public class Platform extends GameBehaviour {
         sizeX = 335;
         sizeY = 55;
         System.out.println(sizeX);
-        Collider collider = new Collider(this, true);
-        BehaviourManager.addCollider(collider);
-        addComponent(collider);
+        Collider collider = new Collider(this, false);
     }
 }

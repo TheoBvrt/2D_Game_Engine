@@ -1,6 +1,6 @@
 package ch.bouverat.engine.game_engine.component;
 
-import ch.bouverat.engine.game_engine.core.BehaviourManager;
+import ch.bouverat.engine.game_engine.core.ObjectManager;
 import ch.bouverat.engine.game_engine.core.Error;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
 import ch.bouverat.engine.game_engine.core.GameEngine;
@@ -9,18 +9,17 @@ import ch.bouverat.engine.game_engine.core.enums.ErrorType;
 import ch.bouverat.engine.game_engine.settings.PhysicsSetting;
 import ch.bouverat.engine.game_engine.utils.Vector2;
 
-public class RigidBody extends Component{
+public class Rigidbody extends Component{
 
     private double forceToAdd = 0.8;
 
     private double maxDistance;
     private Vector2 init;
 
-    private boolean test = false;
     private final Transform transform;
 
 
-    public RigidBody(GameBehaviour parent, Transform transform) {
+    public Rigidbody(GameBehaviour parent, Transform transform) {
         super(parent);
 
         init = parent.getComponent(Transform.class).position;
@@ -28,7 +27,7 @@ public class RigidBody extends Component{
         if (parent.getSizeX() == 0 || parent.getSizeY() == 0) {
             Error.message(ErrorType.WARNING, parent.getClass().getSimpleName() + ".java", "size values are not initialized");
         }
-        BehaviourManager.addRigidbody(this);
+        ObjectManager.addRigidbody(this);
     }
 
     public void updateRigidBody () {

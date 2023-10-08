@@ -36,8 +36,8 @@ public class GameEngine {
             lastTime = currentTime;
             deltaTime = updateLength / 1_000_000_000.0;
 
-            for (int i = 0; i < BehaviourManager.getBehaviourList().size(); i++) {
-                GameBehaviour behaviour = BehaviourManager.getBehaviourList().get(i);
+            for (int i = 0; i < ObjectManager.getBehaviourList().size(); i++) {
+                GameBehaviour behaviour = ObjectManager.getBehaviourList().get(i);
                 if (behaviour != null) {
                     behaviour.update();
                     if (behaviour.hasComponent(Collider.class)) {
@@ -61,8 +61,8 @@ public class GameEngine {
 
     private void physicLoop() {
         while (true) {
-            for (int i = 0; i < BehaviourManager.getRigidBodyList().size(); i++) {
-                BehaviourManager.getRigidBodyList().get(i).updateRigidBody();
+            for (int i = 0; i < ObjectManager.getRigidBodyList().size(); i++) {
+                ObjectManager.getRigidBodyList().get(i).updateRigidBody();
             }
             try {
                 Thread.sleep(1);
