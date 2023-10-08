@@ -10,8 +10,9 @@ import ch.bouverat.engine.game_engine.utils.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Collider extends Component{
+public class Collider extends Component {
 
+    public boolean isTrigger;
     public boolean onGround = false;
 
     private final double colliderSizeY = parent.getSizeY();
@@ -19,25 +20,20 @@ public class Collider extends Component{
     private final double colliderSizeX = parent.getSizeX();
 
     private List<Collider> currentlyColliding = new ArrayList<>();
+    private List<Collider> currentlyTriggerCollding = new ArrayList<>();
 
 
     public Vector2 origin = parent.getComponent(Transform.class).position;
     public Vector2 end = new Vector2(origin.x + colliderSizeX, origin.y + colliderSizeY);
 
 
-    public Collider(GameBehaviour parent) {
+    public Collider(GameBehaviour parent, boolean trigger) {
         super(parent);
+        this.isTrigger = trigger;
         require(Transform.class);
         if (parent.getSizeX() == 0 || parent.getSizeY() == 0) {
             Error.message(ErrorType.WARNING, parent.getClass().getSimpleName() + ".java", "size values are not initialized");
         }
-    }
-
-    private boolean isCollidingWith(Vector2 position, Collider other) {
-        return position.x < other.end.x + 1 &&
-                position.x + parent.getSizeX() > other.origin.x - 1&&
-                position.y < other.end.y + 1 &&
-                position.y + parent.getSizeY() > other.origin.y - 1;
     }
 
     private boolean isOnGround(Vector2 position, Collider other) {
@@ -45,39 +41,81 @@ public class Collider extends Component{
     }
 
     private void onCollisionEnter(Collider collider) {
-        parent.onCollisionEnter(collider.getParent());
+        parent.onCollisionEnter(collider.parent);
+    }
+
+    private void onTriggerEnter(Collider collider) {
+        parent.onTriggerEnter(collider.parent);
+    }
+
+    private boolean isCollidingWith(Vector2 position, Collider other) {
+        return position.x < other.end.x + 1 &&
+                position.x + parent.getSizeX() > other.origin.x - 1 &&
+                position.y < other.end.y + 1 &&
+                position.y + parent.getSizeY() > other.origin.y - 1;
     }
 
     public void onCollision(Vector2 vector2) {
         List<Collider> colliders = new ArrayList<>();
+        List<Collider> triggers = new ArrayList<>();
 
         onGround = false;
-        for (Collider collider : BehaviourManager.getColliderList()) {
-            if (collider.getParent() != parent) {
-                if (isCollidingWith(vector2, collider)) {
-                    if (!onGround && isOnGround(vector2, collider)) {
+        for (Collider otherCollider : BehaviourManager.getColliderList()) {
+            if (otherCollider.getParent() != parent) {
+                //System.out.println("Collider game : " + getParent().getClass().getSimpleName());
+                //System.out.println(otherCollider.getParent().getClass().getSimpleName() + " : " + isCollidingWith(vector2, otherCollider));
+
+                if (isCollidingWith(vector2, otherCollider)) {
+                    if (!onGround && isOnGround(vector2, otherCollider)) {
                         onGround = true;
                     }
-                    if (!colliders.contains(collider)) {
-                        colliders.add(collider);
+                    if (!otherCollider.isTrigger) {
+                        if (!colliders.contains(otherCollider)) {
+                            colliders.add(otherCollider);
+                        }
+                    }else {
+                        if (!triggers.contains(otherCollider)) {
+                            triggers.add(otherCollider);
+                        }
                     }
                 }
             }
         }
 
-        for (Collider collider : colliders) {
-            if (collider.getParent() != parent) {
-                if (!currentlyColliding.contains(collider)) {
-                    onCollisionEnter(collider);
-                    currentlyColliding.add(collider);
+        for (Collider otherCollider : colliders) {
+            if (otherCollider.getParent() != parent) {
+                if (!currentlyColliding.contains(otherCollider)) {
+                    onCollisionEnter(otherCollider);
+                    currentlyColliding.add(otherCollider);
                 }
             }
         }
 
-        for (Collider collider : colliders) {
-            parent.onCollision(collider.parent);
+        for (Collider otherCollider : colliders) {
+            if (otherCollider.getParent() != parent) {
+                parent.onCollision(otherCollider.parent);
+            }
         }
 
+        onTrigger(triggers);
         currentlyColliding = new ArrayList<>(colliders);
+    }
+
+    public void onTrigger(List<Collider> colliders) {
+        for (Collider otherCollider : colliders) {
+            if (otherCollider.getParent() != parent) {
+                if (!currentlyTriggerCollding.contains(otherCollider)) {
+                    onTriggerEnter(otherCollider);
+                    currentlyTriggerCollding.add(otherCollider);
+                }
+            }
+        }
+
+        for (Collider otherCollider : colliders) {
+            if (otherCollider.getParent() != parent) {
+                parent.onTrigger(otherCollider.parent);
+            }
+        }
+        currentlyTriggerCollding = new ArrayList<>(colliders);
     }
 }

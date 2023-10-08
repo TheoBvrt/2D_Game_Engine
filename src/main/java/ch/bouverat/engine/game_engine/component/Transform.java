@@ -27,9 +27,11 @@ public class Transform extends Component {
             proposedPosition.x += value;
             boolean collisionDetectedX = false;
             for (Collider collider : BehaviourManager.getColliderList()) {
-                if(isCollidingWith(collider, proposedPosition)) {
-                    collisionDetectedX = true;
-                    break;
+                if (collider.getParent() != parent) {
+                    if(isCollidingWith(collider, proposedPosition) && !collider.isTrigger) {
+                        collisionDetectedX = true;
+                        break;
+                    }
                 }
             }
             if(!collisionDetectedX) {
@@ -41,28 +43,16 @@ public class Transform extends Component {
 
             boolean collisionDetectedY = false;
             for (Collider collider : BehaviourManager.getColliderList()) {
-                if(isCollidingWith(collider, proposedPosition)) {
-                    collisionDetectedY = true;
-                    break;
+                if (collider.getParent() != parent) {
+                    if(isCollidingWith(collider, proposedPosition) && !collider.isTrigger) {
+                        collisionDetectedY = true;
+                        break;
+                    }
                 }
             }
 
             if(!collisionDetectedY) {
                 position.y = proposedPosition.y;
-            }
-        }
-    }
-
-    public void addForce(Axis axis, double value) {
-        if (axis == Axis.Y) {
-            double y = position.y;
-            double val = position.y - value;
-            double seg = (val / 3) * 2;
-            //System.out.println("Player Y :" + (int)(position.y + value) + " - " + (int)seg);
-            while (y > seg) {
-                System.out.println("test");
-                slide(Axis.Y, -1);
-                y --;
             }
         }
     }

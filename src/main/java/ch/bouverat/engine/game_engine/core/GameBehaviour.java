@@ -30,12 +30,21 @@ public abstract class GameBehaviour {
 
     public void update() {}
 
+    //Collider call
+
     public void onCollision(GameBehaviour gameBehaviour) {}
 
     public void onCollisionEnter(GameBehaviour gameBehaviour) {}
 
+
+    public void onTrigger(GameBehaviour gameBehaviour) {}
+
+    public void onTriggerEnter(GameBehaviour gameBehaviour) {}
+
+
+    //Other
+
     public void addComponent(Component component) {
-        components.add(component);
         for (int i = 0; i < components.size(); i++) {
             Class<?> currentComponent = components.get(i).getClass();
             for (int j = 0; j < components.size(); j++) {
@@ -46,6 +55,7 @@ public abstract class GameBehaviour {
                 }
             }
         }
+        components.add(component);
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {

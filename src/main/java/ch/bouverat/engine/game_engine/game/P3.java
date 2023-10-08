@@ -15,7 +15,7 @@ public class P3 extends GameBehaviour {
 
         sizeX = 335;
         sizeY = 55;
-        Collider collider = new Collider(this);
+        Collider collider = new Collider(this, false);
         BehaviourManager.addCollider(collider);
         addComponent(collider);
     }

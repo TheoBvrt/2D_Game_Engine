@@ -22,6 +22,7 @@ public class RigidBody extends Component{
 
     public RigidBody(GameBehaviour parent, Transform transform) {
         super(parent);
+
         init = parent.getComponent(Transform.class).position;
         this.transform = transform;
         if (parent.getSizeX() == 0 || parent.getSizeY() == 0) {

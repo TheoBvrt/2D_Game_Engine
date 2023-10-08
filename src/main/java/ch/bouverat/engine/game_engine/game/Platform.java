@@ -21,7 +21,7 @@ public class Platform extends GameBehaviour {
         sizeX = 335;
         sizeY = 55;
         System.out.println(sizeX);
-        Collider collider = new Collider(this);
+        Collider collider = new Collider(this, true);
         BehaviourManager.addCollider(collider);
         addComponent(collider);
     }

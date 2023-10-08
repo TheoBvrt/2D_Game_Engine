@@ -40,8 +40,9 @@ public class GameEngine {
                 GameBehaviour behaviour = BehaviourManager.getBehaviourList().get(i);
                 if (behaviour != null) {
                     behaviour.update();
-                    if (behaviour.getComponent(Collider.class) != null) {
-                        behaviour.getComponent(Collider.class).onCollision(behaviour.getComponent(Transform.class).position);
+                    if (behaviour.hasComponent(Collider.class)) {
+                        Collider collider = behaviour.getComponent(Collider.class);
+                        collider.onCollision(behaviour.getComponent(Transform.class).position);
                     }
                 }
             }
