@@ -3,18 +3,23 @@ package ch.bouverat.engine.game_engine.game;
 import ch.bouverat.engine.game_engine.component.Collider;
 import ch.bouverat.engine.game_engine.component.SpriteRenderer;
 import ch.bouverat.engine.game_engine.component.Transform;
-import ch.bouverat.engine.game_engine.core.ObjectManager;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
+import ch.bouverat.engine.game_engine.core.enums.Tag;
 import ch.bouverat.engine.game_engine.utils.Vector2;
 
-public class P3 extends GameBehaviour {
+
+public class Ground extends GameBehaviour {
+
+    @Override
     public void start() {
-        addComponent(new Transform(this, new Vector2(570, 250)));
-        SpriteRenderer spriteRenderer = new SpriteRenderer(this,"src/main/resources/platform.png");
+        tag = Tag.GROUND;
+        addComponent(new Transform(this, new Vector2(0, 400)));
+        SpriteRenderer spriteRenderer = new SpriteRenderer(this,"src/main/resources/ground.png");
         addComponent(spriteRenderer);
 
-        sizeX = 335;
-        sizeY = 55;
+        sizeX = 720;
+        sizeY = 400;
+        System.out.println(sizeX);
         Collider collider = new Collider(this, false);
     }
 }

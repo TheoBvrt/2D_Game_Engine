@@ -1,18 +1,13 @@
 package ch.bouverat.engine.game_engine;
 
-import ch.bouverat.engine.game_engine.core.GameEngine;
-import ch.bouverat.engine.game_engine.core.GameManager;
+import ch.bouverat.engine.game_engine.core.GameSetup;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) {
-        GameManager gameManager = new GameManager();
+        GameSetup gameManager = new GameSetup();
         gameManager.start();
     }
 

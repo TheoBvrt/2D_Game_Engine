@@ -1,9 +1,7 @@
 package ch.bouverat.engine.game_engine.component;
 
-import ch.bouverat.engine.game_engine.core.ObjectManager;
+import ch.bouverat.engine.game_engine.core.*;
 import ch.bouverat.engine.game_engine.core.Error;
-import ch.bouverat.engine.game_engine.core.GameBehaviour;
-import ch.bouverat.engine.game_engine.core.GameEngine;
 import ch.bouverat.engine.game_engine.core.enums.Axis;
 import ch.bouverat.engine.game_engine.core.enums.ErrorType;
 import ch.bouverat.engine.game_engine.settings.PhysicsSetting;
@@ -36,7 +34,7 @@ public class Rigidbody extends Component{
         } else {
             forceToAdd = 0;
         }
-        transform.slide(Axis.Y, PhysicsSetting.gravityForce * GameEngine.deltaTime);
+        transform.slide(Axis.Y, PhysicsSetting.gravityForce * Time.DeltaTime);
     }
 
     public void addForce(double value, double maxDistance) {

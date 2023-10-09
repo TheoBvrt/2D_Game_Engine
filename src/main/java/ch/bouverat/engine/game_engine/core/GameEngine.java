@@ -9,8 +9,6 @@ public class GameEngine {
     public WindowSettings projectConfiguration;
     private final GraphicsContext graphicsContext;
 
-    public static double deltaTime;
-
     public GameEngine(WindowSettings projectConfiguration, GraphicsContext graphicsContext) {
         this.projectConfiguration = projectConfiguration;
         this.graphicsContext = graphicsContext;
@@ -29,13 +27,18 @@ public class GameEngine {
 
     private void gameLoop() {
         long lastTime = System.nanoTime();
+        long lastSecondTime = System.nanoTime();
 
         while (true) {
             long currentTime = System.nanoTime();
             long updateLength = currentTime - lastTime;
             lastTime = currentTime;
-            deltaTime = updateLength / 1_000_000_000.0;
+            Time.DeltaTime = updateLength / 1_000_000_000.0;
 
+            if (currentTime - lastSecondTime >= 1_000_000_000) {
+                Time.currentSecond++;
+                lastSecondTime += 1_000_000_000;
+            }
             for (int i = 0; i < ObjectManager.getBehaviourList().size(); i++) {
                 GameBehaviour behaviour = ObjectManager.getBehaviourList().get(i);
                 if (behaviour != null) {
@@ -50,6 +53,7 @@ public class GameEngine {
                 int TARGET_FPS = 120;
                 long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
                 long sleepTime = (lastTime - System.nanoTime() + OPTIMAL_TIME) / 1000000;
+
                 if (sleepTime > 0) {
                     Thread.sleep(sleepTime);
                 }
