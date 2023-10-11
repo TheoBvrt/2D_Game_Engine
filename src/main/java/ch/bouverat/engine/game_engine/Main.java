@@ -10,7 +10,6 @@ public class Main extends Application {
         GameSetup gameManager = new GameSetup();
         gameManager.start();
     }
-
     public static void main(String[] args) {
         launch();
     }

@@ -13,6 +13,21 @@ public class InputManager {
         keyReader();
     }
 
+    //public methods
+    public static boolean keyPressed(KeyCode code) {
+        return key[code.ordinal()];
+    }
+
+    public static boolean keyIsDown(KeyCode code) {
+        int index = code.ordinal();
+        if (keyDown[index]) {
+            keyDown[index] = false;
+            return true;
+        }
+        return false;
+    }
+
+    //private methods
     private void keyReader() {
         scene.setOnKeyPressed(event -> {
             key[event.getCode().ordinal()] = true;
@@ -25,18 +40,5 @@ public class InputManager {
             key[event.getCode().ordinal()] = false;
             keyDown[event.getCode().ordinal()] = false;
         });
-    }
-
-    public static boolean keyPressed(KeyCode code) {
-        return key[code.ordinal()];
-    }
-
-    public static boolean keyIsDown(KeyCode code) {
-        int index = code.ordinal();
-        if (keyDown[index]) {
-            keyDown[index] = false;
-            return true;
-        }
-        return false;
     }
 }

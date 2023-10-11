@@ -11,7 +11,6 @@ public class SpriteRenderer extends Component{
         super(parent);
         setSprite(spritePath);
     }
-
     public void setSprite (String spritePath) {
         File imgFile = new File(spritePath);
         sprite = new Image(imgFile.toURI().toString());

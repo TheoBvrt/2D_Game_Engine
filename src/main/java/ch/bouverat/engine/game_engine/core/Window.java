@@ -17,6 +17,17 @@ public class Window {
         initWindow();
     }
 
+    //public methods
+    public Scene getScene() {
+        return scene;
+    }
+
+    public GraphicsContext getGraphicsContext() {
+        return graphicsContext;
+    }
+
+
+    //private methods
     private void initWindow() {
         Stage stage = new Stage();
         stage.setTitle(windowSettings.windowName);
@@ -27,13 +38,5 @@ public class Window {
         stage.setResizable(windowSettings.isResizable);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public Scene getScene() {
-        return scene;
-    }
-
-    public GraphicsContext getGraphicsContext() {
-        return graphicsContext;
     }
 }

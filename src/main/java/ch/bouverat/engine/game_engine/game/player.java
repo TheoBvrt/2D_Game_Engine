@@ -3,6 +3,7 @@ package ch.bouverat.engine.game_engine.game;
 import ch.bouverat.engine.game_engine.component.*;
 import ch.bouverat.engine.game_engine.core.*;
 import ch.bouverat.engine.game_engine.core.enums.Axis;
+import ch.bouverat.engine.game_engine.core.enums.Tag;
 import ch.bouverat.engine.game_engine.utils.Vector2;
 import javafx.scene.input.KeyCode;
 
@@ -13,14 +14,13 @@ public class player extends GameBehaviour {
     Collider collider;
     @Override
     public void start() {
-        addComponent(new Transform(this, new Vector2(250, 0)));
-        SpriteRenderer spriteRenderer = new SpriteRenderer(this, "src/main/resources/bishop.png");
-        sizeY = 64;
-        sizeX = 34;
+        addComponent(new Transform(this, new Vector2(335, 215)));
+        SpriteRenderer spriteRenderer = new SpriteRenderer(this, "src/main/resources/player.png");
+        sizeY = 49;
+        sizeX = 49;
         collider = new Collider(this, false);
         addComponent(collider);
         addComponent(spriteRenderer);
-        addComponent(new Rigidbody(this, this.getComponent(Transform.class)));
         transform = getComponent(Transform.class);
     }
 
@@ -32,9 +32,18 @@ public class player extends GameBehaviour {
         if (InputManager.keyPressed(KeyCode.A)) {
             transform.slide(Axis.X, -650f * Time.DeltaTime);
         }
-        if (InputManager.keyIsDown(KeyCode.SPACE)) {
-            getComponent(Rigidbody.class).addForce(-5, 150);
+        if (InputManager.keyPressed(KeyCode.S)) {
+            transform.slide(Axis.Y, 650f * Time.DeltaTime);
+        }
+        if (InputManager.keyPressed(KeyCode.W)) {
+            transform.slide(Axis.Y, -650f * Time.DeltaTime);
         }
     }
 
+    @Override
+    public void onTriggerEnter(GameBehaviour gameBehaviour) {
+        if (gameBehaviour.compareTag(Tag.Enemy)) {
+            System.exit(0);
+        }
+    }
 }

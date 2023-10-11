@@ -14,13 +14,7 @@ public class Transform extends Component {
         this.position = position;
     }
 
-    private boolean isCollidingWith(Collider other, Vector2 proposedPosition) {
-        return proposedPosition.x < other.end.x &&
-                proposedPosition.x + parent.getSizeX() > other.origin.x &&
-                proposedPosition.y < other.end.y &&
-                proposedPosition.y + parent.getSizeY() > other.origin.y;
-    }
-
+    //public methods
     public void slide(Axis axis, double value) {
         Vector2 proposedPosition = new Vector2(position.x, position.y);
         if(axis == Axis.X) {
@@ -53,5 +47,22 @@ public class Transform extends Component {
                 position.y = proposedPosition.y;
             }
         }
+        if (parent.hasComponent(Collider.class)) {
+            Collider collider = parent.getComponent(Collider.class);
+
+            collider.origin.x = position.x;
+            collider.origin.y = position.y;
+
+            collider.end.x = position.x + collider.getColliderSizeX();
+            collider.end.y = position.y + collider.getColliderSizeY();
+        }
+    }
+
+    //private methods
+    private boolean isCollidingWith(Collider other, Vector2 proposedPosition) {
+        return proposedPosition.x < other.end.x &&
+                proposedPosition.x + parent.getSizeX() > other.origin.x &&
+                proposedPosition.y < other.end.y &&
+                proposedPosition.y + parent.getSizeY() > other.origin.y;
     }
 }

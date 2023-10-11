@@ -11,21 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Collider extends Component {
-
-    public boolean isTrigger;
-    public boolean onGround = false;
-
     private final double colliderSizeY = parent.getSizeY();
-
     private final double colliderSizeX = parent.getSizeX();
-
     private List<Collider> currentlyColliding = new ArrayList<>();
     private List<Collider> currentlyTriggerCollding = new ArrayList<>();
 
-
     public Vector2 origin = parent.getComponent(Transform.class).position;
     public Vector2 end = new Vector2(origin.x + colliderSizeX, origin.y + colliderSizeY);
-
+    public boolean isTrigger;
+    public boolean onGround = false;
 
     public Collider(GameBehaviour parent, boolean trigger) {
         super(parent);
@@ -37,24 +31,11 @@ public class Collider extends Component {
         ObjectManager.addCollider(this);
     }
 
-    private boolean isOnGround(Vector2 position, Collider other) {
-        return (position.y + parent.getSizeY() > other.origin.y - 1);
-    }
 
-    private void onCollisionEnter(Collider collider) {
-        parent.onCollisionEnter(collider.parent);
-    }
+    //public methods
+    public double getColliderSizeX() {return colliderSizeX;}
 
-    private void onTriggerEnter(Collider collider) {
-        parent.onTriggerEnter(collider.parent);
-    }
-
-    private boolean isCollidingWith(Vector2 position, Collider other) {
-        return position.x < other.end.x + 1 &&
-                position.x + parent.getSizeX() > other.origin.x - 1 &&
-                position.y < other.end.y + 1 &&
-                position.y + parent.getSizeY() > other.origin.y - 1;
-    }
+    public double getColliderSizeY() {return colliderSizeY;}
 
     public void onCollision(Vector2 vector2) {
         List<Collider> colliders = new ArrayList<>();
@@ -99,7 +80,9 @@ public class Collider extends Component {
         currentlyColliding = new ArrayList<>(colliders);
     }
 
-    public void onTrigger(List<Collider> colliders) {
+
+    //private methods
+    private void onTrigger(List<Collider> colliders) {
         for (Collider otherCollider : colliders) {
             if (otherCollider.getParent() != parent) {
                 if (!currentlyTriggerCollding.contains(otherCollider)) {
@@ -115,5 +98,20 @@ public class Collider extends Component {
             }
         }
         currentlyTriggerCollding = new ArrayList<>(colliders);
+    }
+
+    private boolean isOnGround(Vector2 position, Collider other) {
+        return (position.y + parent.getSizeY() > other.origin.y - 1);
+    }
+
+    private void onCollisionEnter(Collider collider) {parent.onCollisionEnter(collider.parent);}
+
+    private void onTriggerEnter(Collider collider) {parent.onTriggerEnter(collider.parent);}
+
+    private boolean isCollidingWith(Vector2 position, Collider other) {
+        return position.x < other.end.x + 1 &&
+                position.x + parent.getSizeX() > other.origin.x - 1 &&
+                position.y < other.end.y + 1 &&
+                position.y + parent.getSizeY() > other.origin.y - 1;
     }
 }

@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 public class Render{
     public static void updateRender(GraphicsContext graphicsContext) {
         Image image = null;
+
         graphicsContext.clearRect(0, 0, 720, 480);
         for (GameBehaviour gameBehaviour : ObjectManager.getBehaviourList()) {
             if (gameBehaviour.getComponent(Transform.class) != null) {

@@ -10,12 +10,9 @@ import ch.bouverat.engine.game_engine.utils.Vector2;
 public class Rigidbody extends Component{
 
     private double forceToAdd = 0.8;
-
     private double maxDistance;
     private Vector2 init;
-
     private final Transform transform;
-
 
     public Rigidbody(GameBehaviour parent, Transform transform) {
         super(parent);

@@ -4,8 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 
 public class RenderLoop extends AnimationTimer {
-    private GraphicsContext graphicsContext;
-
+    private final GraphicsContext graphicsContext;
     public RenderLoop(GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
     }

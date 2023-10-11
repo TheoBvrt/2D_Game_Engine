@@ -16,7 +16,6 @@ public abstract class GameBehaviour {
     //Private
     private final List<Component> components = new ArrayList<>();
 
-
     //Protected
     protected float sizeY;
     protected float sizeX;
@@ -35,7 +34,6 @@ public abstract class GameBehaviour {
     public void onCollision(GameBehaviour gameBehaviour) {}
 
     public void onCollisionEnter(GameBehaviour gameBehaviour) {}
-
 
     public void onTrigger(GameBehaviour gameBehaviour) {}
 
