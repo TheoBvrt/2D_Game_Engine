@@ -1,6 +1,7 @@
 package ch.bouverat.engine.game_engine.game;
 
 import ch.bouverat.engine.game_engine.component.Collider;
+import ch.bouverat.engine.game_engine.component.SoundPlayer;
 import ch.bouverat.engine.game_engine.component.SpriteRenderer;
 import ch.bouverat.engine.game_engine.component.Transform;
 import ch.bouverat.engine.game_engine.core.GameBehaviour;
@@ -14,25 +15,24 @@ public class Enemy extends GameBehaviour {
 
     long current;
     long timeToWait;
-    Transform transform;
-    Collider collider;
+    private Transform transform;
+    private Collider collider;
 
-    boolean isOk = false;
     @Override
     public void start() {
         timeToWait = Time.currentSecond + 4;
         tag = Tag.Enemy;
         sizeX = 50;
         sizeY = 50;
+
         addComponent(new SpriteRenderer(this, "src/main/resources/enemy.png"));
-
-        transform = new Transform(this, new Vector2(700, 200));
+        transform = new Transform(this, new Vector2(720, 200));
         addComponent(transform);
-
         collider = new Collider(this, true);
         addComponent(collider);
-
-        isOk = true;
+        SoundPlayer soundPlayer = new SoundPlayer(this, "src/main/resources/sound.wav");
+        addComponent(soundPlayer);
+        soundPlayer.play();
     }
 
     @Override

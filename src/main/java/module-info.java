@@ -1,6 +1,7 @@
 module ch.bouverat.engine.game_engine {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
     exports ch.bouverat.engine.game_engine.utils;
     exports ch.bouverat.engine.game_engine.settings;
